@@ -52,31 +52,72 @@ function play(playerPlay, computerPlay, playerPoints, cpuPoints) {
             result = "Invalid, put a real option. ('Rock', 'Paper' or 'Scissors')";
             break;
     }
-    console.log(result);
+    currState.innerText = result;
 }
 
 
 function game() {
-    var cpuPoints = [0];
-    var playerPoints = [0];
-    for (let i = 0; i < 5; i++) {
 
-        let playerSelection = prompt("Make your move: ");
+    if (cpuPoints[0] < 5 && playerPoints[0] < 5) {
+        let playerSelection = this.innerText;
         playerSelection = playerSelection.toLowerCase();
-
+    
         play(playerSelection, computerPlay(), playerPoints, cpuPoints);
-
-    }
-
-    if (playerPoints > cpuPoints) {
-        console.log("You win with " + playerPoints[0] + " against " + cpuPoints[0] + ".");
-    }
-    else if (playerPoints < cpuPoints) {
-        console.log("You lose with " + playerPoints[0] + " against " + cpuPoints[0] + ".");
-    }
-    else {
-        console.log("It's a draw with " + playerPoints[0] + " against " + cpuPoints[0] + ".");
+    
+        if (playerPoints > cpuPoints) {
+            //console.log("You win with " + playerPoints[0] + " against " + cpuPoints[0] + ".");
+            //currState.innerText = `You win with ${playerPoints[0]} against ${cpuPoints[0]}.`;
+            playerCounter.innerText = playerPoints[0];
+            cpuCounter.innerText = cpuPoints[0];
+        }
+        else if (playerPoints < cpuPoints) {
+            //console.log("You lose with " + playerPoints[0] + " against " + cpuPoints[0] + ".");
+            //currState.innerText = `You lose with ${playerPoints[0]} against ${cpuPoints[0]}.`;
+            playerCounter.innerText = playerPoints[0];
+            cpuCounter.innerText = cpuPoints[0];
+        }
+        else {
+            //console.log("It's a draw with " + playerPoints[0] + " against " + cpuPoints[0] + ".");
+            //currState.innerText = `It's a draw with ${playerPoints[0]} against ${cpuPoints[0]}.`;
+            playerCounter.innerText = playerPoints[0];
+            cpuCounter.innerText = cpuPoints[0];
+        }
+    
+        if (playerPoints[0] === 5 || cpuPoints[0] === 5) {
+    
+            if (playerPoints[0] === 5) {
+                currState.style.color = "yellow";
+                currState.innerText = `You have won with ${playerPoints[0]} against ${cpuPoints[0]}.`;
+            }
+            else if (cpuPoints[0] === 5) {
+                currState.style.color = "red";
+                currState.innerText = `You have lost with ${playerPoints[0]} against ${cpuPoints[0]}.`;
+            }
+        }
     }
 }
 
-game();
+function logText(e){
+    console.log(this.innerText);
+}
+
+// Take the button elements
+const rock = document.querySelector('#btn-rock');
+const paper = document.querySelector('#btn-paper');
+const scissors = document.querySelector('#btn-scissors');
+
+//take the text elements
+const currState = document.querySelector('#currState');
+const playerCounter =  document.querySelector('.playerCounter');
+const cpuCounter = document.querySelector('.cpuCounter');
+
+//player and cpu points
+const cpuPoints = [0];
+const playerPoints = [0];
+
+
+    rock.addEventListener('click', game);
+    paper.addEventListener('click', game);
+    scissors.addEventListener('click', game);
+
+
